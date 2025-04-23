@@ -1,0 +1,101 @@
+=============================================
+LIMPEZA DE ARQUIVOS TEMPORÁRIOS DO WINDOWS
+=============================================
+
+Este programa permite limpar arquivos temporários do Windows, navegadores web e aplicativos de desenvolvimento (Android Studio, Python e Node.js) para liberar espaço em disco e potencialmente melhorar o desempenho do sistema.
+
+------------------
+COMO UTILIZAR
+------------------
+
+1. Execute o arquivo "Limpeza_Windows.exe" com um duplo clique
+
+2. Na interface, você terá duas opções principais:
+   
+   - Limpeza Rápida: 
+     Limpa automaticamente as pastas Temp, Prefetch, arquivos de Atualização do Windows
+     e cache dos navegadores mais comuns (Chrome e Edge)
+     (recomendado para uso frequente)
+   
+   - Limpeza Avançada: 
+     Permite selecionar quais pastas e tipos de arquivos deseja limpar.
+
+3. Opções de limpeza disponíveis:
+
+   SISTEMA WINDOWS:
+   * Pasta Temp do Windows (selecionada por padrão)
+   * Pasta Prefetch (selecionada por padrão)
+   * Arquivos de Atualização do Windows (selecionada por padrão)
+   * Arquivos Recentes
+   * Pasta Downloads (cuidado, isso excluirá todos os arquivos da sua pasta de downloads!)
+
+   NAVEGADORES WEB:
+   * Google Chrome (cache, cookies, arquivos temporários)
+   * Microsoft Edge (cache, cookies, arquivos temporários)
+   * Mozilla Firefox (cache, thumbnails, arquivos temporários)
+   * Opera (cache, arquivos temporários)
+   * Brave Browser (cache, arquivos temporários)
+
+   APLICATIVOS DE DESENVOLVIMENTO:
+   * Android Studio (limpa caches, pastas build e arquivos temporários)
+   * Python (limpa __pycache__, arquivos .pyc, pastas build e dist)
+   * Node.js (limpa node_modules e npm-cache)
+
+4. Após selecionar as opções desejadas, clique no botão "Limpeza Avançada"
+
+5. Aguarde a conclusão do processo. O programa mostrará uma mensagem com a quantidade de espaço liberado.
+
+------------------
+DETALHES DA LIMPEZA
+------------------
+
+ARQUIVOS DE ATUALIZAÇÃO DO WINDOWS:
+- Limpa a pasta SoftwareDistribution/Download (arquivos de atualização baixados)
+- Limpa a pasta de logs do Windows Update
+- Limpa o cache do Delivery Optimization (usado para download de atualizações)
+- Tenta limpar componentes temporários do WinSxS (requer privilégios de administrador)
+
+NAVEGADORES WEB:
+- Google Chrome: Limpa pastas de cache, cache de código, GPU cache, cache de mídia e cache de serviço
+- Microsoft Edge: Limpa pastas de cache, cache de código, GPU cache e cache de serviço
+- Mozilla Firefox: Limpa cache2, thumbnails, shaderCache e arquivos temporários
+- Opera: Limpa cache, GPU cache, cache de sistema e cache de código
+- Brave: Limpa pastas de cache, cache de código, GPU cache e cache de serviço
+
+ANDROID STUDIO:
+- Limpa o cache do Gradle (.gradle/caches)
+- Limpa a pasta de cache do Android (.android/cache)
+- Procura e limpa pastas "build" e ".gradle" em projetos Android
+
+PYTHON:
+- Limpa o cache do pip (pip/cache)
+- Procura e remove pastas "__pycache__" em projetos
+- Remove arquivos .pyc
+- Limpa pastas "build" e "dist" em projetos Python (com setup.py)
+
+NODE.JS:
+- Limpa o cache do npm (.npm/_cacache)
+- Procura e limpa pastas "node_modules" em projetos com package.json
+
+------------------
+OBSERVAÇÕES
+------------------
+
+* Para limpar pastas do sistema (como Temp, Prefetch e atualizações do Windows), é recomendável executar o programa como administrador:
+  - Clique com o botão direito no arquivo "Limpeza_Windows.exe"
+  - Selecione "Executar como administrador"
+
+* A limpeza da pasta de atualizações do Windows (SoftwareDistribution) pode exigir privilégios de administrador.
+  Alguns arquivos podem estar em uso pelo serviço Windows Update e não poderão ser excluídos.
+
+* Para limpar navegadores, certifique-se de que eles estejam fechados antes de executar a limpeza.
+  Arquivos em uso pelos navegadores não poderão ser excluídos.
+
+* Tenha cuidado ao limpar arquivos de desenvolvimento. Se você estiver trabalhando ativamente em projetos, isso poderá
+  afetar a compilação. Recomenda-se limpar apenas quando não estiver trabalhando nos projetos.
+
+* Alguns arquivos em uso pelo sistema não poderão ser excluídos, o que é normal.
+
+* O programa foi criado usando Python e compilado em um executável usando PyInstaller.
+
+* Utilize com responsabilidade. 

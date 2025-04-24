@@ -39,6 +39,7 @@ COMO UTILIZAR
    APLICATIVOS DE DESENVOLVIMENTO:
    * Android Studio (limpa caches, pastas build e arquivos temporários)
    * Python (limpa __pycache__, arquivos .pyc, pastas build e dist)
+   * Python (limpar cache e biblioteca) - limpa cache do Python, cache de pacotes instalados, cache do pip e cache de wheel
    * Node.js (limpa node_modules e npm-cache)
 
 4. Após selecionar as opções desejadas, clique no botão "Limpeza Avançada"
@@ -72,6 +73,11 @@ PYTHON:
 - Procura e remove pastas "__pycache__" em projetos
 - Remove arquivos .pyc
 - Limpa pastas "build" e "dist" em projetos Python (com setup.py)
+- Limpa cache e biblioteca do Python:
+  * Cache do Python (__pycache__)
+  * Cache de pacotes instalados (site-packages)
+  * Cache do pip (pip/cache)
+  * Cache de wheel (pip/wheels)
 
 NODE.JS:
 - Limpa o cache do npm (.npm/_cacache)

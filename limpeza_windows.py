@@ -108,11 +108,13 @@ class LimpezaWindows:
         # Variáveis para as opções de desenvolvimento
         self.var_android_studio = tk.BooleanVar(value=False)
         self.var_python = tk.BooleanVar(value=False)
+        self.var_python_lib = tk.BooleanVar(value=False)  # Nova variável para limpar biblioteca Python
         self.var_nodejs = tk.BooleanVar(value=False)
         
         # Checkboxes para aplicativos de desenvolvimento
         tk.Checkbutton(self.dev_frame, text="Android Studio (cache, build e temporários)", variable=self.var_android_studio, font=("Segoe UI", 10)).pack(anchor=tk.W, pady=3)
         tk.Checkbutton(self.dev_frame, text="Python (__pycache__, .pyc, build, dist)", variable=self.var_python, font=("Segoe UI", 10)).pack(anchor=tk.W, pady=3)
+        tk.Checkbutton(self.dev_frame, text="Python (limpar cache e biblioteca)", variable=self.var_python_lib, font=("Segoe UI", 10)).pack(anchor=tk.W, pady=3)
         tk.Checkbutton(self.dev_frame, text="Node.js (node_modules, npm-cache)", variable=self.var_nodejs, font=("Segoe UI", 10)).pack(anchor=tk.W, pady=3)
         
         # Barra de progresso - Frame normal
@@ -217,6 +219,7 @@ class LimpezaWindows:
         downloads_original = self.var_downloads.get()
         android_studio_original = self.var_android_studio.get()
         python_original = self.var_python.get()
+        python_lib_original = self.var_python_lib.get()  # Nova variável
         nodejs_original = self.var_nodejs.get()
         windows_update_original = self.var_windows_update.get()
         chrome_original = self.var_chrome.get()
@@ -232,6 +235,7 @@ class LimpezaWindows:
         self.var_downloads.set(False)
         self.var_android_studio.set(False)
         self.var_python.set(False)
+        self.var_python_lib.set(False)
         self.var_nodejs.set(False)
         self.var_windows_update.set(True)
         # Navegadores na limpeza rápida
@@ -251,6 +255,7 @@ class LimpezaWindows:
         self.var_downloads.set(downloads_original)
         self.var_android_studio.set(android_studio_original)
         self.var_python.set(python_original)
+        self.var_python_lib.set(python_lib_original)
         self.var_nodejs.set(nodejs_original)
         self.var_windows_update.set(windows_update_original)
         self.var_chrome.set(chrome_original)
@@ -413,6 +418,47 @@ class LimpezaWindows:
                 projetos_path = os.path.join(os.environ['USERPROFILE'], 'Projects')
                 if os.path.exists(projetos_path):
                     espaco += self.limpar_python_files(projetos_path)
+                
+                total_limpo += espaco
+            
+            # Limpeza de biblioteca Python
+            if self.var_python_lib.get():
+                self.status_var.set("Limpando cache e biblioteca do Python...")
+                self.root.update_idletasks()
+                
+                # Limpar cache do Python
+                python_cache = os.path.join(os.environ['LOCALAPPDATA'], 'Python', 'Python313', '__pycache__')
+                espaco = 0
+                if os.path.exists(python_cache):
+                    espaco += self.limpar_diretorio(python_cache)
+                
+                # Limpar cache de pacotes instalados
+                site_packages = os.path.join(os.environ['LOCALAPPDATA'], 'Programs', 'Python', 'Python313', 'Lib', 'site-packages')
+                if os.path.exists(site_packages):
+                    # Limpar __pycache__ em todos os pacotes
+                    for root, dirs, files in os.walk(site_packages):
+                        if os.path.basename(root) == "__pycache__":
+                            espaco += self.limpar_diretorio(root)
+                        # Limpar arquivos .pyc
+                        for file in files:
+                            if file.endswith(".pyc"):
+                                try:
+                                    filepath = os.path.join(root, file)
+                                    tamanho = os.path.getsize(filepath)
+                                    os.unlink(filepath)
+                                    espaco += tamanho
+                                except (PermissionError, OSError):
+                                    pass
+                
+                # Limpar cache de pip
+                pip_cache = os.path.join(os.environ['LOCALAPPDATA'], 'pip', 'cache')
+                if os.path.exists(pip_cache):
+                    espaco += self.limpar_diretorio(pip_cache)
+                
+                # Limpar cache de wheel
+                wheel_cache = os.path.join(os.environ['LOCALAPPDATA'], 'pip', 'wheels')
+                if os.path.exists(wheel_cache):
+                    espaco += self.limpar_diretorio(wheel_cache)
                 
                 total_limpo += espaco
             
